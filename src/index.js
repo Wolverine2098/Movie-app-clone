@@ -1,11 +1,22 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App";
 import rootReducer from "./reducers";
 
-const store = createStore(rootReducer);
+//currying function logger
+//logger(obj)(next)(action)
+const logger = function ({ dispatch, getState }) {
+  return function (next) {
+    return function (action) {
+      console.log("ACTION_TYPE", action);
+      next(action);
+    };
+  };
+};
+
+const store = createStore(rootReducer, applyMiddleware(logger));
 console.log("before state", store.getState());
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
