@@ -27,7 +27,17 @@ export function addUnFavourite(movie) {
 export function setShowFavourites(val) {
   return {
     type: SET_SHOW_FAVOURITES,
+
     val,
   };
+}
+
+export function handleMovieSearch(movie) {
+  const url = `https://www.omdbapi.com/?t=${movie}&y=2022&apikey=60408eb0`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((movie) => {
+      console.log("movie", movie);
+    });
 }
 // these are action creators
